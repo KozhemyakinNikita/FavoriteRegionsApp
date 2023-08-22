@@ -14,6 +14,7 @@ protocol RegionViewControllerLoaderDelegate {
 
 class RegionViewController: UIViewController {
     private var viewModel = RegionViewModel()
+    private var tableViewCell = RegionTableViewCell()
     
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -38,6 +39,7 @@ class RegionViewController: UIViewController {
         }
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Регионы"
@@ -47,7 +49,11 @@ class RegionViewController: UIViewController {
         viewModel = RegionViewModel()
         viewModel.fetchRegions()
         setupUI()
+        tableView.delegate = self
+        tableView.dataSource = self
         viewModel.view = self
+        tableViewCell.delegate = self
+        
         
     }
     
@@ -92,18 +98,11 @@ extension RegionViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: RegionTableViewCell.reuseIdentifier, for: indexPath) as? RegionTableViewCell {
-            var region = viewModel.region(at: indexPath.row)
+            let region = viewModel.region(at: indexPath.row)
             print("Configuring: \(region.title)")
-            cell.configure(with: region)
-//            cell.likeButton.isSelected = region.isLiked
-            region.isLiked = cell.likeButton.isSelected
-            viewModel.toggleLike(for: region)
-            print("========START========")
-            print(cell.likeButton.isSelected)
-            print("================")
-            print(region.isLiked)
-            print("=======END=========")
-//
+            cell.delegate = self
+            cell.configure(with: region, cellIndex: indexPath.row)
+            
             return cell
         }
         return UITableViewCell()
@@ -112,10 +111,9 @@ extension RegionViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let region = viewModel.region(at: indexPath.row)
 
-//        viewModel.toggleLike(for: region)
-//        likeButton.isSelected = region.isLiked
+
         navigationController?.pushViewController(DetailRegionsViewController(), animated: true)
-//        tableView.reloadRows(at: [indexPath], with: .automatic)
+
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -135,6 +133,17 @@ extension RegionViewController: RegionListViewReload {
     func hideLoader() {
         activityIndicator.stopAnimating()
     }
+}
+
+extension RegionViewController: RegionTableViewCellDelegate {
+    func didToggleLike(for indexPath: Int, isLiked: Bool) {
+        viewModel.didTapLikeVC(isLiked: isLiked, at: indexPath)
+        print("didToggleLike\(indexPath)")
+        tableView.reloadData()
+        
+    }
+    
+    
 }
 
 

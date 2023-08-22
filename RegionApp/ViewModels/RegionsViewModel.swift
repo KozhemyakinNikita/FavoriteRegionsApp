@@ -17,9 +17,9 @@ protocol RegionViewModelProtocol: AnyObject {
     var numberOfRegions: Int { get }
     func region(at index: Int) -> Brand
     func fetchRegions()
-    func toggleLike(for brand: Brand)
     func showLoader()
     func hideLoader()
+    func didTapLikeVC(isLiked: Bool, at index: Int)
 }
 
 
@@ -86,9 +86,9 @@ extension RegionViewModel: RegionViewModelProtocol {
         }
     }
     
-    func toggleLike(for brand: Brand) {
-        if let index = regions.firstIndex(where: { $0.brandID == brand.brandID }) {
-            regions[index].isLiked.toggle()
-        }
+    func didTapLikeVC(isLiked: Bool, at index: Int) {
+       regions[index].isLiked = isLiked
+        print("isLikedViewModel: \(regions[index].title) - \(regions[index].isLiked)")
+        
     }
 }

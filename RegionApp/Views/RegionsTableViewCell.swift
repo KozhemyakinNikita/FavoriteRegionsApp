@@ -10,12 +10,14 @@ import UIKit
 import SDWebImage
 
 protocol RegionTableViewCellDelegate: AnyObject {
-    func didToggleLike(for indexPath: IndexPath)
+    func didToggleLike(for indexPath: Int, isLiked: Bool)
 }
 
 class RegionTableViewCell: UITableViewCell {
     static let reuseIdentifier = "RegionCell"
     weak var delegate: RegionTableViewCellDelegate?
+    var isLiked = false
+    var index = 0
     
     private let regionLabel: UILabel = {
         let label = UILabel()
@@ -28,13 +30,18 @@ class RegionTableViewCell: UITableViewCell {
     let likeButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "likeButton"), for: .normal)
-        button.setImage(UIImage(named: "likeButtonFilled"), for: .selected)
         button.tintColor = UIColor.Colors.colorRed
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    private let regionPicture = UIImageView()
+    //    private let regionPicture = UIImageView()
+    private let regionPicture: UIImageView = {
+        let picture = UIImageView()
+        picture.layer.cornerRadius = 16
+        picture.clipsToBounds = true
+        return picture
+    }()
     
     private let verticalStack: UIStackView = {
         let stack = UIStackView()
@@ -45,26 +52,41 @@ class RegionTableViewCell: UITableViewCell {
         return stack
     }()
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        isLiked = false
+        likeButton.setImage(UIImage(named: "likeButton"), for: .normal)
+        delegate = nil
+    }
     
     
-    func configure(with region: Brand) {
+    func configure(with region: Brand, cellIndex: Int) {
+        isLiked = region.isLiked
+        index = cellIndex
         regionLabel.text = region.title
         guard let imageUrl = URL(string: region.thumbUrls.first ?? "") else { return }
         regionPicture.sd_setImage(with: imageUrl)
         
         setupUI()
-        regionPicture.layer.cornerRadius = 16
-        regionPicture.clipsToBounds = true
+        
         likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+        likeButton.tintColor = region.isLiked ? UIColor.Colors.colorRed : UIColor.Colors.colorRed
+        
+        if isLiked {
+            likeButton.setImage(UIImage(named: "likeButtonFilled"), for: .normal)
+        } else {
+            likeButton.setImage(UIImage(named: "likeButton"), for: .normal)
+        }
+        
     }
     
     @objc private func likeButtonTapped() {
-        likeButton.isSelected.toggle()
-        print(likeButton.isSelected)
+        isLiked.toggle()
+        delegate?.didToggleLike(for: index, isLiked: isLiked)
         print("TAPPED")
     }
-
-
+    
+    
     
     func setupUI() {
         contentView.backgroundColor = UIColor.Colors.backPrimary
