@@ -18,6 +18,7 @@ class RegionViewController: UIViewController {
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = UIColor.Colors.backPrimary
+        tableView.isUserInteractionEnabled = true
         return tableView
     }()
     
@@ -91,9 +92,18 @@ extension RegionViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: RegionTableViewCell.reuseIdentifier, for: indexPath) as? RegionTableViewCell {
-            let region = viewModel.region(at: indexPath.row)
+            var region = viewModel.region(at: indexPath.row)
             print("Configuring: \(region.title)")
             cell.configure(with: region)
+//            cell.likeButton.isSelected = region.isLiked
+            region.isLiked = cell.likeButton.isSelected
+            viewModel.toggleLike(for: region)
+            print("========START========")
+            print(cell.likeButton.isSelected)
+            print("================")
+            print(region.isLiked)
+            print("=======END=========")
+//
             return cell
         }
         return UITableViewCell()
@@ -101,8 +111,11 @@ extension RegionViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let region = viewModel.region(at: indexPath.row)
-        viewModel.toggleLike(for: region)
-        tableView.reloadRows(at: [indexPath], with: .automatic)
+
+//        viewModel.toggleLike(for: region)
+//        likeButton.isSelected = region.isLiked
+        navigationController?.pushViewController(DetailRegionsViewController(), animated: true)
+//        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -9,8 +9,13 @@ import Foundation
 import UIKit
 import SDWebImage
 
+protocol RegionTableViewCellDelegate: AnyObject {
+    func didToggleLike(for indexPath: IndexPath)
+}
+
 class RegionTableViewCell: UITableViewCell {
     static let reuseIdentifier = "RegionCell"
+    weak var delegate: RegionTableViewCellDelegate?
     
     private let regionLabel: UILabel = {
         let label = UILabel()
@@ -20,8 +25,12 @@ class RegionTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let likeButton: UIView = {
-        let button = UIButton(type: .system)
+    let likeButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "likeButton"), for: .normal)
+        button.setImage(UIImage(named: "likeButtonFilled"), for: .selected)
+        button.tintColor = UIColor.Colors.colorRed
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -36,7 +45,7 @@ class RegionTableViewCell: UITableViewCell {
         return stack
     }()
     
-
+    
     
     func configure(with region: Brand) {
         regionLabel.text = region.title
@@ -46,15 +55,26 @@ class RegionTableViewCell: UITableViewCell {
         setupUI()
         regionPicture.layer.cornerRadius = 16
         regionPicture.clipsToBounds = true
-        
+        likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
     }
     
+    @objc private func likeButtonTapped() {
+        likeButton.isSelected.toggle()
+        print(likeButton.isSelected)
+        print("TAPPED")
+    }
+
+
+    
     func setupUI() {
-//        verticalStack.backgroundColor = .blue
         contentView.backgroundColor = UIColor.Colors.backPrimary
         contentView.addSubview(verticalStack)
+        regionPicture.addSubview(likeButton)
+        regionPicture.isUserInteractionEnabled = true
         verticalStack.addArrangedSubview(regionPicture)
         verticalStack.addArrangedSubview(regionLabel)
+        
+        likeButton.tintColor = UIColor.Colors.colorRed
         
         verticalStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -65,7 +85,7 @@ class RegionTableViewCell: UITableViewCell {
         
         regionPicture.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-//            regionPicture.topAnchor.constraint(equalTo: verticalStack.topAnchor, constant: 16),
+            //            regionPicture.topAnchor.constraint(equalTo: verticalStack.topAnchor, constant: 16),
             regionPicture.leadingAnchor.constraint(equalTo: verticalStack.leadingAnchor),
             regionPicture.trailingAnchor.constraint(equalTo: verticalStack.trailingAnchor),
             regionPicture.heightAnchor.constraint(equalToConstant: 275)
@@ -77,6 +97,15 @@ class RegionTableViewCell: UITableViewCell {
             regionLabel.trailingAnchor.constraint(equalTo: regionLabel.trailingAnchor),
             regionLabel.heightAnchor.constraint(equalToConstant: 25)
         ])
+        
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            likeButton.topAnchor.constraint(equalTo: regionPicture.topAnchor, constant: 20),
+            likeButton.trailingAnchor.constraint(equalTo: regionPicture.trailingAnchor, constant: -20),
+            likeButton.heightAnchor.constraint(equalToConstant: 25),
+            likeButton.widthAnchor.constraint(equalToConstant: 25),
+        ])
+        
         
     }
     

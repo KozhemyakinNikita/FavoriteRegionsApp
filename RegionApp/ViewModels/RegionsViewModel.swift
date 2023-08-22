@@ -87,6 +87,8 @@ extension RegionViewModel: RegionViewModelProtocol {
     }
     
     func toggleLike(for brand: Brand) {
-        
+        if let index = regions.firstIndex(where: { $0.brandID == brand.brandID }) {
+            regions[index].isLiked.toggle()
+        }
     }
 }
