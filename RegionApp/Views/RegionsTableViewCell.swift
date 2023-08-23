@@ -38,8 +38,12 @@ class RegionTableViewCell: UITableViewCell {
     //    private let regionPicture = UIImageView()
     private let regionPicture: UIImageView = {
         let picture = UIImageView()
-        picture.layer.cornerRadius = 16
         picture.clipsToBounds = true
+        picture.layer.cornerRadius = 16
+        picture.layer.shadowColor = UIColor.red.cgColor
+        picture.layer.shadowOpacity = 0.5
+        picture.layer.shadowOffset = CGSize(width: 8, height: 8)
+        picture.layer.shadowRadius = 10
         return picture
     }()
     

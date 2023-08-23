@@ -14,16 +14,19 @@ protocol RegionViewControllerLoaderDelegate {
 
 class RegionViewController: UIViewController {
     private var viewModel = RegionViewModel()
-    private var tableViewCell = RegionTableViewCell()
-    
-    private let tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.register(
+            RegionTableViewCell.self,
+            forCellReuseIdentifier: RegionTableViewCell.reuseIdentifier
+        )
         tableView.backgroundColor = UIColor.Colors.backPrimary
         tableView.isUserInteractionEnabled = true
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     
-    private let activityIndicator: UIActivityIndicatorView = {
+    private lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .large)
         indicator.color = .gray
         indicator.translatesAutoresizingMaskIntoConstraints = false
@@ -32,62 +35,47 @@ class RegionViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        if viewModel.isLoading {
-            showLoader()
-        } else {
-            hideLoader()
-        }
+        
+        viewModel.isLoading ? showLoader() : hideLoader()
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Регионы"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        setupNavBar()
         setupTableView()
         setupUI()
-        setupActivityIndicator()
-        viewModel = RegionViewModel()
+        
         viewModel.fetchRegions()
-        tableView.delegate = self
-        tableView.dataSource = self
-        viewModel.view = self
-//        tableViewCell.delegate = self
-        
-        
+        viewModel.loadingDelegate = self
     }
     
-    private func setupActivityIndicator() {
-        view.addSubview(activityIndicator)
-        
-        activityIndicator.layer.zPosition = 1
-        
-        activityIndicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+    private func setupNavBar() {
+        title = "Регионы"
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
-    
     
     private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(RegionTableViewCell.self, forCellReuseIdentifier: RegionTableViewCell.reuseIdentifier)
-        //        tableView.backgroundColor = .white
-        
     }
     
     func setupUI() {
         view.addSubview(tableView)
+        view.addSubview(activityIndicator)
         view.backgroundColor = UIColor.Colors.backPrimary
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+        ])
     }
-    
-    
 }
 
 extension RegionViewController: UITableViewDelegate, UITableViewDataSource {
@@ -97,15 +85,18 @@ extension RegionViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: RegionTableViewCell.reuseIdentifier, for: indexPath) as? RegionTableViewCell {
-            let region = viewModel.region(at: indexPath.row)
-            print("Configuring: \(region.title)")
-            cell.delegate = self
-            cell.configure(with: region, cellIndex: indexPath.row)
-            
-            return cell
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: RegionTableViewCell.reuseIdentifier,
+            for: indexPath) as? RegionTableViewCell else {
+            return UITableViewCell()
         }
-        return UITableViewCell()
+        
+        let region = viewModel.region(at: indexPath.row)
+        print("Configuring: \(region.title)")
+        cell.delegate = self
+        cell.configure(with: region, cellIndex: indexPath.row)
+        
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -113,10 +104,9 @@ extension RegionViewController: UITableViewDelegate, UITableViewDataSource {
         let detailViewModel = DetailRegionsViewModel(region: region, index: indexPath.row)
         let detailViewController = DetailRegionsViewController()
         detailViewController.viewModel = detailViewModel
+        detailViewModel.delegate = self
         navigationController?.pushViewController(detailViewController, animated: true)
-
-//        navigationController?.pushViewController(DetailRegionsViewController(), animated: true)
-
+        //        navigationController?.pushViewController(DetailRegionsViewController(), animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -130,7 +120,10 @@ extension RegionViewController: RegionListViewReload {
     }
     
     func showLoader() {
-        activityIndicator.startAnimating()
+        DispatchQueue.main.async {
+            self.activityIndicator.startAnimating()
+        }
+        
     }
     
     func hideLoader() {
@@ -145,10 +138,4 @@ extension RegionViewController: RegionTableViewCellDelegate {
         tableView.reloadData()
         
     }
-    
-    
 }
-
-
-
-

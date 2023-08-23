@@ -22,15 +22,11 @@ protocol RegionViewModelProtocol: AnyObject {
     func didTapLikeVC(isLiked: Bool, at index: Int)
 }
 
-
 class RegionViewModel {
     var isLoading = false
     
-    weak var view: RegionListViewReload?
+    weak var loadingDelegate: RegionListViewReload?
     private var regions: [Brand] = []
-    
-    
-    
     
     func getList() async throws -> [Brand] {
         let urlSession = URLSession.shared
@@ -39,14 +35,11 @@ class RegionViewModel {
         }
         
         let requestURL = URLRequest(url: url)
-        
-        
         let (data, _) = try await urlSession.dataTask(for: requestURL)
         let region = try JSONDecoder().decode(Region.self, from: data)
-        //        print(region.brands)
+        
         return region.brands
     }
-    
 }
 
 extension RegionViewModel: RegionViewModelProtocol {
@@ -57,12 +50,12 @@ extension RegionViewModel: RegionViewModelProtocol {
     
     func showLoader() {
         isLoading = true
-        view?.showLoader()
+        loadingDelegate?.showLoader()
     }
     
     func hideLoader() {
         isLoading = false
-        view?.hideLoader()
+        loadingDelegate?.hideLoader()
     }
     
     func region(at index: Int) -> Brand {
@@ -77,7 +70,7 @@ extension RegionViewModel: RegionViewModelProtocol {
                 DispatchQueue.main.async { [weak self] in
                     self?.regions = regions
                     self?.hideLoader()
-                    self?.view?.reloadData()
+                    self?.loadingDelegate?.reloadData()
                 }
             } catch {
                 hideLoader()
@@ -87,8 +80,7 @@ extension RegionViewModel: RegionViewModelProtocol {
     }
     
     func didTapLikeVC(isLiked: Bool, at index: Int) {
-       regions[index].isLiked = isLiked
+        regions[index].isLiked = isLiked
         print("isLikedViewModel: \(regions[index].title) - \(regions[index].isLiked)")
-        
     }
 }

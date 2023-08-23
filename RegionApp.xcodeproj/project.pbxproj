@@ -21,6 +21,8 @@
 		825C70922A94239C00F17A7C /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825C70912A94239C00F17A7C /* Extentions.swift */; };
 		825C70942A94FBC000F17A7C /* DetailRegionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825C70932A94FBC000F17A7C /* DetailRegionsViewController.swift */; };
 		825C70962A955EFF00F17A7C /* DetailRegionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825C70952A955EFF00F17A7C /* DetailRegionsViewModel.swift */; };
+		825C709A2A96198E00F17A7C /* CarouselCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825C70992A96198E00F17A7C /* CarouselCollectionView.swift */; };
+		825C709C2A9621BA00F17A7C /* CarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825C709B2A9621BA00F17A7C /* CarouselCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		825C70912A94239C00F17A7C /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		825C70932A94FBC000F17A7C /* DetailRegionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRegionsViewController.swift; sourceTree = "<group>"; };
 		825C70952A955EFF00F17A7C /* DetailRegionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRegionsViewModel.swift; sourceTree = "<group>"; };
+		825C70992A96198E00F17A7C /* CarouselCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionView.swift; sourceTree = "<group>"; };
+		825C709B2A9621BA00F17A7C /* CarouselCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionViewCell.swift; sourceTree = "<group>"; };
 		D655BEB7F4599276B6256B15 /* Pods-RegionApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RegionApp.release.xcconfig"; path = "Target Support Files/Pods-RegionApp/Pods-RegionApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -111,6 +115,7 @@
 		825C70812A93C0F200F17A7C /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				825C70952A955EFF00F17A7C /* DetailRegionsViewModel.swift */,
 				825C708B2A93C4C600F17A7C /* RegionsViewModel.swift */,
 			);
 			path = ViewModels;
@@ -123,7 +128,8 @@
 				825C70892A93C4B200F17A7C /* RegionsViewController.swift */,
 				825C708F2A93E15000F17A7C /* RegionsTableViewCell.swift */,
 				825C70932A94FBC000F17A7C /* DetailRegionsViewController.swift */,
-				825C70952A955EFF00F17A7C /* DetailRegionsViewModel.swift */,
+				825C70992A96198E00F17A7C /* CarouselCollectionView.swift */,
+				825C709B2A9621BA00F17A7C /* CarouselCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -258,10 +264,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				825C709A2A96198E00F17A7C /* CarouselCollectionView.swift in Sources */,
 				825C706E2A93BF6B00F17A7C /* AppDelegate.swift in Sources */,
 				825C70962A955EFF00F17A7C /* DetailRegionsViewModel.swift in Sources */,
 				825C70862A93C33D00F17A7C /* APIService.swift in Sources */,
 				825C708C2A93C4C600F17A7C /* RegionsViewModel.swift in Sources */,
+				825C709C2A9621BA00F17A7C /* CarouselCollectionViewCell.swift in Sources */,
 				825C70942A94FBC000F17A7C /* DetailRegionsViewController.swift in Sources */,
 				825C70702A93BF6B00F17A7C /* SceneDelegate.swift in Sources */,
 				825C708E2A93C4D100F17A7C /* RegionsModel.swift in Sources */,

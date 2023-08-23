@@ -64,12 +64,17 @@ class DetailRegionsViewController: UIViewController {
         return stack
     }()
     
+    private var carouselCollectionView = CarouselCollectionView()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
         navigationController?.navigationBar.tintColor = UIColor.Colors.labelPrimary
         setupUI()
         configureUI()
+        carouselCollectionView.detailViewModel = viewModel
     }
     
     private func setupUI() {
@@ -77,7 +82,8 @@ class DetailRegionsViewController: UIViewController {
         verticalStack.backgroundColor = .green
         view.addSubview(verticalStack)
         verticalStack.addArrangedSubview(titleLabel)
-        verticalStack.addArrangedSubview(regionImageView)
+//        verticalStack.addArrangedSubview(regionImageView)
+        verticalStack.addArrangedSubview(carouselCollectionView)
         verticalStack.addArrangedSubview(horizontalStack)
         horizontalStack.addArrangedSubview(likeButton)
         horizontalStack.addArrangedSubview(viewsLabel)
@@ -97,14 +103,23 @@ class DetailRegionsViewController: UIViewController {
 //            titleLabel.trailingAnchor.constraint(equalTo: verticalStack.trailingAnchor, constant: -16),
         ])
 
-        regionImageView.translatesAutoresizingMaskIntoConstraints = false
+//        regionImageView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+////            regionImageView.leadingAnchor.constraint(equalTo: verticalStack.leadingAnchor, constant: 8),
+////            regionImageView.trailingAnchor.constraint(equalTo: verticalStack.trailingAnchor, constant: -8),
+//            regionImageView.widthAnchor.constraint(equalToConstant: 343),
+//            regionImageView.heightAnchor.constraint(equalToConstant: 326)
+//
+//        ])
+        carouselCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
 //            regionImageView.leadingAnchor.constraint(equalTo: verticalStack.leadingAnchor, constant: 8),
 //            regionImageView.trailingAnchor.constraint(equalTo: verticalStack.trailingAnchor, constant: -8),
-            regionImageView.widthAnchor.constraint(equalToConstant: 343),
-            regionImageView.heightAnchor.constraint(equalToConstant: 326)
+            carouselCollectionView.widthAnchor.constraint(equalTo: verticalStack.widthAnchor),
+            carouselCollectionView.heightAnchor.constraint(equalToConstant: 326)
             
         ])
+        
 
         horizontalStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -130,12 +145,11 @@ class DetailRegionsViewController: UIViewController {
     }
     
     private func configureUI() {
-//        liked = viewModel.isLiked
         titleLabel.text = viewModel.title
-        regionImageView.sd_setImage(with: viewModel.imageUrl)
+        regionImageView.sd_setImage(with: viewModel.imageUrls.first)
         viewsLabel.text = "Просмотров: \(viewModel.viewsCount)"
         
-        if liked {
+        if viewModel.isLiked {
             likeButton.setImage(UIImage(named: "likeButtonFilled"), for: .normal)
         } else {
             likeButton.setImage(UIImage(named: "likeButton"), for: .normal)
@@ -145,8 +159,9 @@ class DetailRegionsViewController: UIViewController {
     }
     
     @objc private func likeButtonTapped() {
-        liked.toggle()
-        viewModel.toggleLike(isLiked: liked)
+//        liked.toggle()
+        viewModel.isLiked.toggle()
+        viewModel.toggleLike(isLiked: viewModel.isLiked)
         configureUI()
     }
 }
