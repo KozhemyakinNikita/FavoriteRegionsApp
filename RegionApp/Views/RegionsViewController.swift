@@ -45,14 +45,14 @@ class RegionViewController: UIViewController {
         title = "Регионы"
         navigationController?.navigationBar.prefersLargeTitles = true
         setupTableView()
+        setupUI()
         setupActivityIndicator()
         viewModel = RegionViewModel()
         viewModel.fetchRegions()
-        setupUI()
         tableView.delegate = self
         tableView.dataSource = self
         viewModel.view = self
-        tableViewCell.delegate = self
+//        tableViewCell.delegate = self
         
         
     }
@@ -110,9 +110,12 @@ extension RegionViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let region = viewModel.region(at: indexPath.row)
+        let detailViewModel = DetailRegionsViewModel(region: region, index: indexPath.row)
+        let detailViewController = DetailRegionsViewController()
+        detailViewController.viewModel = detailViewModel
+        navigationController?.pushViewController(detailViewController, animated: true)
 
-
-        navigationController?.pushViewController(DetailRegionsViewController(), animated: true)
+//        navigationController?.pushViewController(DetailRegionsViewController(), animated: true)
 
     }
     

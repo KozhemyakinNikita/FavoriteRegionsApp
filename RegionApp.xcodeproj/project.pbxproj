@@ -20,6 +20,7 @@
 		825C70902A93E15000F17A7C /* RegionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825C708F2A93E15000F17A7C /* RegionsTableViewCell.swift */; };
 		825C70922A94239C00F17A7C /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825C70912A94239C00F17A7C /* Extentions.swift */; };
 		825C70942A94FBC000F17A7C /* DetailRegionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825C70932A94FBC000F17A7C /* DetailRegionsViewController.swift */; };
+		825C70962A955EFF00F17A7C /* DetailRegionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825C70952A955EFF00F17A7C /* DetailRegionsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		825C708F2A93E15000F17A7C /* RegionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionsTableViewCell.swift; sourceTree = "<group>"; };
 		825C70912A94239C00F17A7C /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		825C70932A94FBC000F17A7C /* DetailRegionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRegionsViewController.swift; sourceTree = "<group>"; };
+		825C70952A955EFF00F17A7C /* DetailRegionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRegionsViewModel.swift; sourceTree = "<group>"; };
 		D655BEB7F4599276B6256B15 /* Pods-RegionApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RegionApp.release.xcconfig"; path = "Target Support Files/Pods-RegionApp/Pods-RegionApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,6 +123,7 @@
 				825C70892A93C4B200F17A7C /* RegionsViewController.swift */,
 				825C708F2A93E15000F17A7C /* RegionsTableViewCell.swift */,
 				825C70932A94FBC000F17A7C /* DetailRegionsViewController.swift */,
+				825C70952A955EFF00F17A7C /* DetailRegionsViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				825C706E2A93BF6B00F17A7C /* AppDelegate.swift in Sources */,
+				825C70962A955EFF00F17A7C /* DetailRegionsViewModel.swift in Sources */,
 				825C70862A93C33D00F17A7C /* APIService.swift in Sources */,
 				825C708C2A93C4C600F17A7C /* RegionsViewModel.swift in Sources */,
 				825C70942A94FBC000F17A7C /* DetailRegionsViewController.swift in Sources */,
