@@ -98,6 +98,7 @@ class DetailRegionsViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
         navigationController?.navigationBar.tintColor = UIColor.Colors.labelPrimary
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
         setupUI()
         configureUI()
         carouselCollectionView.detailViewModel = viewModel
