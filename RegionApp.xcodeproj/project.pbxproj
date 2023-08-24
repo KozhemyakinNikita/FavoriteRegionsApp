@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0DCBE0D0F77FB7170CAAC493 /* Pods_RegionApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61130ED3D3E2055FA4A30CB7 /* Pods_RegionApp.framework */; };
 		825C706E2A93BF6B00F17A7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825C706D2A93BF6B00F17A7C /* AppDelegate.swift */; };
 		825C70702A93BF6B00F17A7C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825C706F2A93BF6B00F17A7C /* SceneDelegate.swift */; };
 		825C70772A93BF6E00F17A7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 825C70762A93BF6E00F17A7C /* Assets.xcassets */; };
@@ -23,11 +22,10 @@
 		825C709A2A96198E00F17A7C /* CarouselCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825C70992A96198E00F17A7C /* CarouselCollectionView.swift */; };
 		825C709C2A9621BA00F17A7C /* CarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825C709B2A9621BA00F17A7C /* CarouselCollectionViewCell.swift */; };
 		82F327B72A9783C400A2A225 /* FullImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F327B62A9783C400A2A225 /* FullImageViewController.swift */; };
+		82F327BA2A97AA0100A2A225 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 82F327B92A97AA0100A2A225 /* SDWebImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		198D4DD54B8310BC8A3CC0C9 /* Pods-RegionApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RegionApp.debug.xcconfig"; path = "Target Support Files/Pods-RegionApp/Pods-RegionApp.debug.xcconfig"; sourceTree = "<group>"; };
-		61130ED3D3E2055FA4A30CB7 /* Pods_RegionApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RegionApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		825C706A2A93BF6B00F17A7C /* RegionApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RegionApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		825C706D2A93BF6B00F17A7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		825C706F2A93BF6B00F17A7C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,7 +43,6 @@
 		825C70992A96198E00F17A7C /* CarouselCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionView.swift; sourceTree = "<group>"; };
 		825C709B2A9621BA00F17A7C /* CarouselCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionViewCell.swift; sourceTree = "<group>"; };
 		82F327B62A9783C400A2A225 /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
-		D655BEB7F4599276B6256B15 /* Pods-RegionApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RegionApp.release.xcconfig"; path = "Target Support Files/Pods-RegionApp/Pods-RegionApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,37 +50,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0DCBE0D0F77FB7170CAAC493 /* Pods_RegionApp.framework in Frameworks */,
+				82F327BA2A97AA0100A2A225 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2C05AB9A43FA22D1ECA645BD /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				61130ED3D3E2055FA4A30CB7 /* Pods_RegionApp.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		4F727F89E91DD41BD82F8C6F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				198D4DD54B8310BC8A3CC0C9 /* Pods-RegionApp.debug.xcconfig */,
-				D655BEB7F4599276B6256B15 /* Pods-RegionApp.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		825C70612A93BF6B00F17A7C = {
 			isa = PBXGroup;
 			children = (
 				825C706C2A93BF6B00F17A7C /* RegionApp */,
 				825C706B2A93BF6B00F17A7C /* Products */,
-				4F727F89E91DD41BD82F8C6F /* Pods */,
-				2C05AB9A43FA22D1ECA645BD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -157,17 +135,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 825C707E2A93BF6E00F17A7C /* Build configuration list for PBXNativeTarget "RegionApp" */;
 			buildPhases = (
-				743BA774387EC04A524A3FB5 /* [CP] Check Pods Manifest.lock */,
 				825C70662A93BF6B00F17A7C /* Sources */,
 				825C70672A93BF6B00F17A7C /* Frameworks */,
 				825C70682A93BF6B00F17A7C /* Resources */,
-				296E56B3C82C9975F5D9E0E5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = RegionApp;
+			packageProductDependencies = (
+				82F327B92A97AA0100A2A225 /* SDWebImage */,
+			);
 			productName = RegionApp;
 			productReference = 825C706A2A93BF6B00F17A7C /* RegionApp.app */;
 			productType = "com.apple.product-type.application";
@@ -196,6 +175,9 @@
 				Base,
 			);
 			mainGroup = 825C70612A93BF6B00F17A7C;
+			packageReferences = (
+				82F327B82A97AA0100A2A225 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			productRefGroup = 825C706B2A93BF6B00F17A7C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -216,48 +198,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		296E56B3C82C9975F5D9E0E5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RegionApp/Pods-RegionApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RegionApp/Pods-RegionApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RegionApp/Pods-RegionApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		743BA774387EC04A524A3FB5 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-RegionApp-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		825C70662A93BF6B00F17A7C /* Sources */ = {
@@ -410,7 +350,6 @@
 		};
 		825C707F2A93BF6E00F17A7C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 198D4DD54B8310BC8A3CC0C9 /* Pods-RegionApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -439,7 +378,6 @@
 		};
 		825C70802A93BF6E00F17A7C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D655BEB7F4599276B6256B15 /* Pods-RegionApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -488,6 +426,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		82F327B82A97AA0100A2A225 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		82F327B92A97AA0100A2A225 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 82F327B82A97AA0100A2A225 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 825C70622A93BF6B00F17A7C /* Project object */;
 }
