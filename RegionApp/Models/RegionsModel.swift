@@ -20,7 +20,7 @@ struct Brand: Codable {
     let slug, type: String
     let viewsCount: Int
     var isLiked: Bool = false
-
+    
     enum CodingKeys: String, CodingKey {
         case brandID = "brandId"
         case title, thumbUrls

@@ -8,6 +8,8 @@
 import UIKit
 import SDWebImage
 
+//MARK: - class CarouselCollectionViewCell: UICollectionViewCell
+
 class CarouselCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "CarouselCollectionViewCell"
@@ -17,12 +19,14 @@ class CarouselCollectionViewCell: UICollectionViewCell {
         picture.layer.cornerRadius = 16
         picture.clipsToBounds = true
         picture.contentMode = .scaleAspectFill
-        //        picture.backgroundColor = .red
         return picture
     }()
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        regionPicture.addGestureRecognizer(tapGesture)
+        regionPicture.isUserInteractionEnabled = true
     }
     
     required init?(coder: NSCoder) {
@@ -31,13 +35,7 @@ class CarouselCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        //        layer.shadowRadius = 10
-        //        layer.shadowOpacity = 0.7
-        //        layer.shadowOffset = CGSize(width: 8, height: 8)
-        //        layer.shadowColor = UIColor.darkGray.cgColor
-        //        self.clipsToBounds = false
-        
-        self.dropShadow(color: .darkGray, opacity: 1, offSet: CGSize(width: 4, height: 4), radius: 5)
+        self.dropShadow(color: .darkGray, opacity: 1, offSet: CGSize(width: .zero, height: 0), radius: 6)
     }
     
     func setupUI() {
@@ -50,4 +48,12 @@ class CarouselCollectionViewCell: UICollectionViewCell {
             regionPicture.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
+    
+    @objc private func imageTapped() {
+        if let image = regionPicture.image {
+            let fullImageViewController = FullImageViewController(image: image)
+            UIApplication.shared.keyWindow?.rootViewController?.present(fullImageViewController, animated: true, completion: nil)
+        }
+    }
 }
+

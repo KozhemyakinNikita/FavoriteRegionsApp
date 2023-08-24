@@ -8,9 +8,6 @@
 import Foundation
 import UIKit
 
-protocol RegionViewControllerLoaderDelegate {
-    
-}
 
 class RegionViewController: UIViewController {
     private var viewModel = RegionViewModel()
@@ -41,36 +38,13 @@ class RegionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setup()
-    }
-    
-    
-    private func setup() {
-        setupNavBar()
-        setupTableView()
-        setupUI()
-        
-        viewModel.fetchRegions()
-        viewModel.loadingDelegate = self
-    }
-    
-    private func setupNavBar() {
-        title = "Регионы"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        //        navigationController?.navigationBar.backgroundColor = UIColor.Colors.navigationColor
-    }
-    
-    private func setupTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorStyle = .none
     }
     
     func setupUI() {
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
-        view.backgroundColor = UIColor.Colors.navigationColor
+        view.backgroundColor = UIColor.Colors.backPrimary
         
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -84,11 +58,34 @@ class RegionViewController: UIViewController {
             activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
     }
+    
+    
+    private func setup() {
+        setupNavBar()
+        setupTableView()
+        setupUI()
+        
+        viewModel.fetchRegions()
+        viewModel.loadingDelegate = self
+    }
+    
+    private func setupNavBar() {
+        title = "Любимые регионы"
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    private func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+    }
+    
 }
+
+// MARK: - Extentions
 
 extension RegionViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(viewModel.numberOfRegions)
         return viewModel.numberOfRegions
     }
     
@@ -100,7 +97,6 @@ extension RegionViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         let region = viewModel.region(at: indexPath.row)
-        print("Configuring: \(region.title)")
         cell.delegate = self
         cell.configure(with: region, cellIndex: indexPath.row)
         
@@ -113,22 +109,21 @@ extension RegionViewController: UITableViewDelegate, UITableViewDataSource {
         let detailViewController = DetailRegionsViewController()
         detailViewController.viewModel = detailViewModel
         detailViewModel.delegate = self
-            
+        
         navigationController?.pushViewController(detailViewController, animated: true)
         if let cell = tableView.cellForRow(at: indexPath) as? RegionTableViewCell {
-                // Apply the animation
-                UIView.animate(withDuration: 0.1, animations: {
-                    cell.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-                }, completion: { _ in
-                    UIView.animate(withDuration: 0.1) {
-                        cell.transform = .identity
-                    }
-                })
-            }
+            UIView.animate(withDuration: 0.1, animations: {
+                cell.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            }, completion: { _ in
+                UIView.animate(withDuration: 0.1) {
+                    cell.transform = .identity
+                }
+            })
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 325   //332
+        return 325
     }
 }
 
@@ -150,13 +145,16 @@ extension RegionViewController: RegionListViewReload {
     }
 }
 
-//MARK: - Change
 
 extension RegionViewController: RegionTableViewCellDelegate {
-    func didToggleLike(for indexPath: Int, isLiked: Bool) {
-        viewModel.didTapLikeVC(isLiked: isLiked, at: indexPath)
-        print("didToggleLike\(indexPath)")
-        tableView.reloadData() //change to reload current row
-        
+    
+    func didToggleLike(for index: Int, isLiked: Bool) {
+        viewModel.didTapLikeVC(isLiked: isLiked, at: index)
+    }
+    
+    func didToggleLikeFromDetailVC(for index: Int, isLiked: Bool) {
+        viewModel.didTapLikeVC(isLiked: isLiked, at: index)
+        tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
     }
 }
+

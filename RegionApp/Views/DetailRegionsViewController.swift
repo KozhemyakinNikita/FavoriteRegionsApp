@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+// MARK: - class DetailRegionsViewController: UIViewController
+
 class DetailRegionsViewController: UIViewController {
     var viewModel: DetailRegionsViewModel?
     
@@ -59,8 +61,10 @@ class DetailRegionsViewController: UIViewController {
         let control = UIPageControl()
         control.currentPage = 0
         control.numberOfPages = viewModel?.imageUrls.count ?? 1
-        control.currentPageIndicatorTintColor = .green
-        control.pageIndicatorTintColor = .blue
+        control.currentPageIndicatorTintColor = .Colors.labelPrimary
+        control.pageIndicatorTintColor = .gray
+        control.addTarget(self, action: #selector(pageControlTapped), for: .valueChanged)
+        
         return control
     }()
     
@@ -79,9 +83,15 @@ class DetailRegionsViewController: UIViewController {
         button.setTitle("Вперед", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.setTitleColor(.blue, for: .normal)
+        button.setTitleColor(.Colors.labelPrimary, for: .normal)
         button.addTarget(self, action: #selector(toggleNextButton), for: .touchUpInside)
         return button
+    }()
+    
+    private let eyeIcon: UIImageView = {
+        let eye = UIImageView(image: UIImage(named: "eyeIcon"))
+        eye.tintColor = UIColor.Colors.labelPrimary
+        return eye
     }()
     
     override func viewDidLoad() {
@@ -93,24 +103,18 @@ class DetailRegionsViewController: UIViewController {
         carouselCollectionView.detailViewModel = viewModel
         
         setupColors()
+        setupNavigationBar()
         setupBottomControls()
         carouselCollectionView.delegateSwipe = self
     }
     
-    private func setupColors() {
-        view.backgroundColor = .Colors.backPrimary
-        carouselCollectionView.backgroundColor = .Colors.backPrimary
-        //        view.backgroundColor = .blue
-        //        verticalStack.backgroundColor = .green
-        //        horizontalStack.backgroundColor = .gray
-    }
-    
     private func setupUI() {
         view.addSubview(titleLabel)
-        // view.addSubview(regionImageView)
+        eyeIcon.contentMode = .right
         view.addSubview(carouselCollectionView)
         view.addSubview(horizontalStack)
         horizontalStack.addArrangedSubview(likeButton)
+        horizontalStack.addArrangedSubview(eyeIcon)
         horizontalStack.addArrangedSubview(viewsLabel)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -136,6 +140,30 @@ class DetailRegionsViewController: UIViewController {
             horizontalStack.topAnchor.constraint(equalTo: carouselCollectionView.bottomAnchor, constant: 8),
         ])
         
+        viewsLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            viewsLabel.widthAnchor.constraint(equalToConstant: 40),
+            viewsLabel.trailingAnchor.constraint(equalTo: horizontalStack.trailingAnchor),
+        ])
+        
+        
+        
+    }
+    
+    private func setupColors() {
+        view.backgroundColor = .Colors.backPrimary
+        carouselCollectionView.backgroundColor = .Colors.backPrimary
+    }
+    
+    private func setupNavigationBar() {
+        let backButton = UIBarButtonItem(
+            image: UIImage(named: "chevronLeft"),
+            style: .done,
+            target: self,
+            action: #selector(backButtonPrevious)
+        )
+        navigationItem.leftBarButtonItem = backButton
+        navigationItem.leftBarButtonItem?.tintColor = .Colors.labelPrimary
     }
     
     
@@ -144,7 +172,7 @@ class DetailRegionsViewController: UIViewController {
         
         titleLabel.text = viewModel.title
         regionImageView.sd_setImage(with: viewModel.imageUrls.first)
-        viewsLabel.text = "Просмотров: \(viewModel.viewsCount)"
+        viewsLabel.text = String(viewModel.viewsCount)
         
         if viewModel.isLiked {
             likeButton.setImage(UIImage(named: "likeButtonFilled"), for: .normal)
@@ -155,14 +183,6 @@ class DetailRegionsViewController: UIViewController {
         likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
     }
     
-    @objc private func likeButtonTapped() {
-        guard let viewModel else { return }
-        
-        viewModel.isLiked.toggle()
-        animateLikeButton()
-        viewModel.toggleLike(isLiked: viewModel.isLiked)
-        configureUI()
-    }
     
     private func animateLikeButton() {
         UIView.animate(withDuration: 0.1, animations: {
@@ -174,21 +194,16 @@ class DetailRegionsViewController: UIViewController {
         })
     }
     
-    @objc private func togglePreviousButton() {
-        let nextIndex = max(pageControl.currentPage - 1, 0)
-        let indexPath = IndexPath(item: nextIndex, section: 0)
-        pageControl.currentPage = nextIndex
-        carouselCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        
+    private func updatePreviousButtonAvailability() {
+        previousButton.isEnabled = pageControl.currentPage > 0
+        previousButton.setTitleColor(previousButton.isEnabled ? .Colors.labelPrimary : .gray, for: .normal)
     }
     
-    @objc private func toggleNextButton() {
-        let nextIndex = min(pageControl.currentPage + 1, (viewModel?.imageUrls.count ?? 1) - 1)
-        let indexPath = IndexPath(item: nextIndex, section: 0)
-        pageControl.currentPage = nextIndex
-        carouselCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    private func updateNextButtonAvailability() {
+        let maxIndex = (viewModel?.imageUrls.count ?? 1) - 1
+        nextButton.isEnabled = pageControl.currentPage < maxIndex
+        nextButton.setTitleColor(nextButton.isEnabled ? .Colors.labelPrimary : .gray, for: .normal)
     }
-    
     
     private func setupBottomControls() {
         let bottomControlsStackView = UIStackView(arrangedSubviews: [previousButton, pageControl, nextButton])
@@ -205,12 +220,55 @@ class DetailRegionsViewController: UIViewController {
         ])
     }
     
+    @objc private func backButtonPrevious() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func likeButtonTapped() {
+        guard let viewModel else { return }
+        
+        viewModel.isLiked.toggle()
+        animateLikeButton()
+        viewModel.toggleLike(isLiked: viewModel.isLiked)
+        configureUI()
+    }
+    
+    @objc private func togglePreviousButton() {
+        let nextIndex = max(pageControl.currentPage - 1, 0)
+        let indexPath = IndexPath(item: nextIndex, section: 0)
+        pageControl.currentPage = nextIndex
+        carouselCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        updatePreviousButtonAvailability()
+        updateNextButtonAvailability()
+        
+    }
+    
+    @objc private func toggleNextButton() {
+        let nextIndex = min(pageControl.currentPage + 1, (viewModel?.imageUrls.count ?? 1) - 1)
+        let indexPath = IndexPath(item: nextIndex, section: 0)
+        pageControl.currentPage = nextIndex
+        carouselCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        updatePreviousButtonAvailability()
+        updateNextButtonAvailability()
+    }
+    
+    @objc private func pageControlTapped() {
+        let selectedPage = pageControl.currentPage
+        let indexPath = IndexPath(item: selectedPage, section: 0)
+        carouselCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        updatePreviousButtonAvailability()
+        updateNextButtonAvailability()
+    }
+    
     
 }
 
+// MARK: - Extentions
 
 extension DetailRegionsViewController: CarouselCollectionViewDelegate {
     func collectionView(_ collectionView: CarouselCollectionView, didChangePageTo index: Int) {
         pageControl.currentPage = index
+        updatePreviousButtonAvailability()
+        updateNextButtonAvailability()
     }
 }

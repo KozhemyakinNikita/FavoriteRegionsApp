@@ -7,6 +7,8 @@
 
 import Foundation
 
+//MARK: - class DetailRegionsViewModel
+
 class DetailRegionsViewModel {
     private let region: Brand
     weak var delegate: RegionTableViewCellDelegate?
@@ -32,6 +34,6 @@ class DetailRegionsViewModel {
     }
     
     func toggleLike(isLiked: Bool) {
-        delegate?.didToggleLike(for: index, isLiked: isLiked)
+        delegate?.didToggleLikeFromDetailVC(for: index, isLiked: isLiked)
     }
 }

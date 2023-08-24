@@ -9,14 +9,24 @@ import Foundation
 import UIKit
 import SDWebImage
 
+// MARK: - Protocols
+
 protocol RegionTableViewCellDelegate: AnyObject {
-    func didToggleLike(for indexPath: Int, isLiked: Bool)
+    func didToggleLike(for index: Int, isLiked: Bool)
+    func didToggleLikeFromDetailVC(for index: Int, isLiked: Bool)
 }
+
+// MARK: - class RegionTableViewCell: UITableViewCell
 
 class RegionTableViewCell: UITableViewCell {
     static let reuseIdentifier = "RegionCell"
     weak var delegate: RegionTableViewCellDelegate?
-    var isLiked = false
+    var isLiked = false {
+        didSet {
+            let imageName = self.isLiked ? "likeButtonFilled" : "likeButton"
+            self.likeButton.setImage(UIImage(named: imageName), for: .normal)
+        }
+    }
     var index = 0
     
     private let regionLabel: UILabel = {
@@ -35,6 +45,8 @@ class RegionTableViewCell: UITableViewCell {
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         blurEffectView.translatesAutoresizingMaskIntoConstraints = false
         blurEffectView.alpha = 0.97
+        blurEffectView.layer.cornerRadius = 16
+        blurEffectView.clipsToBounds = true
         return blurEffectView
     }()
     
@@ -55,19 +67,16 @@ class RegionTableViewCell: UITableViewCell {
         return picture
     }()
     
-     let containerView: UIView = {
+    let containerView: UIView = {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
         return container
     }()
     
-    
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        isLiked = false
-        likeButton.setImage(UIImage(named: "likeButton"), for: .normal)
-        delegate = nil
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        containerView.layer.cornerRadius = 16
+        containerView.dropShadow(color: UIColor.systemGray, opacity: 1, offSet: CGSize(width: .zero, height: 0), radius: 7)
     }
     
     
@@ -81,67 +90,11 @@ class RegionTableViewCell: UITableViewCell {
         setupUI()
         
         likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
-        likeButton.tintColor = region.isLiked ? UIColor.Colors.colorRed : UIColor.Colors.colorRed
-        
-//        if isLiked {
-//            likeButton.setImage(UIImage(named: "likeButtonFilled"), for: .normal)
-//        } else {
-//            likeButton.setImage(UIImage(named: "likeButton"), for: .normal)
-//        }
-        
-        animateLikeButton()
-        
-    }
-    
-    @objc private func likeButtonTapped() {
-        isLiked.toggle()
-        animateLikeButton()
-        delegate?.didToggleLike(for: index, isLiked: isLiked)
-        
-        print("TAPPED")
-    }
-    
-    private func animateLikeButton() {
-        UIView.animate(withDuration: 0.1, animations: {
-            self.likeButton.transform = self.likeButton.transform.scaledBy(x: 0.8, y: 0.8)
-            
-            if self.isLiked {
-                self.likeButton.setImage(UIImage(named: "likeButtonFilled"), for: .normal)
-            } else {
-                self.likeButton.setImage(UIImage(named: "likeButton"), for: .normal)
-            }
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.1, animations: {
-                self.likeButton.transform = CGAffineTransform.identity
-            })
-        })
-    }
-    
-    private func colors() {
-        contentView.backgroundColor = .red
-        regionLabel.backgroundColor = .green
-        regionPicture.backgroundColor = .yellow
     }
     
     func setupUI() {
-        //        colors()
-        
         setupConstraints()
-        
-        
-        blurView.layer.cornerRadius = 16
-        blurView.clipsToBounds = true
         regionPicture.isUserInteractionEnabled = true
-        likeButton.tintColor = UIColor.Colors.colorRed
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        containerView.layer.cornerRadius = 16
-        containerView.dropShadow(color: UIColor.systemGray, opacity: 1, offSet: CGSize(width: .zero, height: 0), radius: 7)
-    }
-    
-    private func addBlur() {
     }
     
     private func setupConstraints() {
@@ -192,5 +145,27 @@ class RegionTableViewCell: UITableViewCell {
             likeButton.heightAnchor.constraint(equalToConstant: 25),
             likeButton.widthAnchor.constraint(equalToConstant: 25),
         ])
+    }
+    
+    private func animateLikeButton() {
+        UIView.animate(withDuration: 0.1, animations: {
+            self.likeButton.transform = self.likeButton.transform.scaledBy(x: 0.8, y: 0.8)
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.1, animations: {
+                self.likeButton.transform = CGAffineTransform.identity
+            })
+        })
+    }
+    
+    private func colors() {
+        contentView.backgroundColor = .red
+        regionLabel.backgroundColor = .green
+        regionPicture.backgroundColor = .yellow
+    }
+    
+    @objc private func likeButtonTapped() {
+        isLiked.toggle()
+        animateLikeButton()
+        delegate?.didToggleLike(for: index, isLiked: isLiked)
     }
 }

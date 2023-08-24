@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 enum NetworkError: Error {
     case incorrectCodeStatus(Int)
     case dataError

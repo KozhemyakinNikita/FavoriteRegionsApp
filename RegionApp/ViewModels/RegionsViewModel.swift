@@ -7,6 +7,8 @@
 
 import Foundation
 
+//MARK: - Protocols
+
 protocol RegionListViewReload: AnyObject {
     func reloadData()
     func showLoader()
@@ -21,6 +23,8 @@ protocol RegionViewModelProtocol: AnyObject {
     func hideLoader()
     func didTapLikeVC(isLiked: Bool, at index: Int)
 }
+
+//MARK: - class RegionViewModel
 
 class RegionViewModel {
     var isLoading = false
@@ -41,6 +45,8 @@ class RegionViewModel {
         return region.brands
     }
 }
+
+//MARK: - Extentions
 
 extension RegionViewModel: RegionViewModelProtocol {
     
@@ -71,6 +77,7 @@ extension RegionViewModel: RegionViewModelProtocol {
                     self?.regions = regions
                     self?.hideLoader()
                     self?.loadingDelegate?.reloadData()
+                    print("Successful loading data")
                 }
             } catch {
                 hideLoader()
@@ -81,6 +88,6 @@ extension RegionViewModel: RegionViewModelProtocol {
     
     func didTapLikeVC(isLiked: Bool, at index: Int) {
         regions[index].isLiked = isLiked
-        print("isLikedViewModel: \(regions[index].title) - \(regions[index].isLiked)")
+//        print("isLikedViewModel: \(regions[index].title) - \(regions[index].isLiked)")
     }
 }
