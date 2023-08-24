@@ -23,25 +23,15 @@ class DetailRegionsViewModel {
         return region.title
     }
     
-//    var imageUrl: URL? {
-//        return URL(string: region.thumbUrls.randomElement() ?? "")
-//    }
     var imageUrls: [URL] {
-        print("\(region.thumbUrls.compactMap { URL(string: $0) })")
-            return region.thumbUrls.compactMap { URL(string: $0) }
-        }
+        return region.thumbUrls.compactMap { URL(string: $0) }
+    }
     
     var viewsCount: Int {
         return region.viewsCount
     }
     
-//    var isLiked: Bool {
-//        return region.isLiked
-//    }
-    
-    
     func toggleLike(isLiked: Bool) {
-//        isLiked = region.isLiked
         delegate?.didToggleLike(for: index, isLiked: isLiked)
     }
 }

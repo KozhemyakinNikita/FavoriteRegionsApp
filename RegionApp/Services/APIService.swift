@@ -26,7 +26,6 @@ extension URLSession {
             return try await withCheckedThrowingContinuation { continuation in
                 task = self.dataTask(with: urlRequest) { (data, response, error) in
                     if let result = response as? HTTPURLResponse, let data {
-                        print(response)
                         if httpStatusCodeSuccess.contains(result.statusCode) {
                             continuation.resume(returning: (data, result))
                         } else if let error {

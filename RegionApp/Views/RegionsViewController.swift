@@ -41,6 +41,12 @@ class RegionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setup()
+    }
+    
+    
+    private func setup() {
         setupNavBar()
         setupTableView()
         setupUI()
@@ -52,23 +58,25 @@ class RegionViewController: UIViewController {
     private func setupNavBar() {
         title = "Регионы"
         navigationController?.navigationBar.prefersLargeTitles = true
+        //        navigationController?.navigationBar.backgroundColor = UIColor.Colors.navigationColor
     }
     
     private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none
     }
     
     func setupUI() {
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
-        view.backgroundColor = UIColor.Colors.backPrimary
+        view.backgroundColor = UIColor.Colors.navigationColor
         
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
         NSLayoutConstraint.activate([
@@ -105,12 +113,22 @@ extension RegionViewController: UITableViewDelegate, UITableViewDataSource {
         let detailViewController = DetailRegionsViewController()
         detailViewController.viewModel = detailViewModel
         detailViewModel.delegate = self
+            
         navigationController?.pushViewController(detailViewController, animated: true)
-        //        navigationController?.pushViewController(DetailRegionsViewController(), animated: true)
+        if let cell = tableView.cellForRow(at: indexPath) as? RegionTableViewCell {
+                // Apply the animation
+                UIView.animate(withDuration: 0.1, animations: {
+                    cell.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+                }, completion: { _ in
+                    UIView.animate(withDuration: 0.1) {
+                        cell.transform = .identity
+                    }
+                })
+            }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 332
+        return 325   //332
     }
 }
 
@@ -123,19 +141,22 @@ extension RegionViewController: RegionListViewReload {
         DispatchQueue.main.async {
             self.activityIndicator.startAnimating()
         }
-        
     }
     
     func hideLoader() {
-        activityIndicator.stopAnimating()
+        DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
+        }
     }
 }
+
+//MARK: - Change
 
 extension RegionViewController: RegionTableViewCellDelegate {
     func didToggleLike(for indexPath: Int, isLiked: Bool) {
         viewModel.didTapLikeVC(isLiked: isLiked, at: indexPath)
         print("didToggleLike\(indexPath)")
-        tableView.reloadData()
+        tableView.reloadData() //change to reload current row
         
     }
 }

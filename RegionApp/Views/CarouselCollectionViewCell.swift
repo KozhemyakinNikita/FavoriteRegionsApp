@@ -17,7 +17,7 @@ class CarouselCollectionViewCell: UICollectionViewCell {
         picture.layer.cornerRadius = 16
         picture.clipsToBounds = true
         picture.contentMode = .scaleAspectFill
-//        picture.backgroundColor = .red
+        //        picture.backgroundColor = .red
         return picture
     }()
     override init(frame: CGRect) {
@@ -31,11 +31,13 @@ class CarouselCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        layer.shadowRadius = 10
-        layer.shadowOpacity = 0.7
-        layer.shadowOffset = CGSize(width: 8, height: 8)
-        layer.shadowColor = UIColor.darkGray.cgColor
-        self.clipsToBounds = false
+        //        layer.shadowRadius = 10
+        //        layer.shadowOpacity = 0.7
+        //        layer.shadowOffset = CGSize(width: 8, height: 8)
+        //        layer.shadowColor = UIColor.darkGray.cgColor
+        //        self.clipsToBounds = false
+        
+        self.dropShadow(color: .darkGray, opacity: 1, offSet: CGSize(width: 4, height: 4), radius: 5)
     }
     
     func setupUI() {
@@ -47,6 +49,5 @@ class CarouselCollectionViewCell: UICollectionViewCell {
             regionPicture.topAnchor.constraint(equalTo: topAnchor),
             regionPicture.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
-//        regionPicture.sd_setImage(with: )
     }
 }
