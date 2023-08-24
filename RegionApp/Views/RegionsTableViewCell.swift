@@ -166,6 +166,10 @@ class RegionTableViewCell: UITableViewCell {
     @objc private func likeButtonTapped() {
         isLiked.toggle()
         animateLikeButton()
+        if isLiked {
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(.success)
+        }
         delegate?.didToggleLike(for: index, isLiked: isLiked)
     }
 }

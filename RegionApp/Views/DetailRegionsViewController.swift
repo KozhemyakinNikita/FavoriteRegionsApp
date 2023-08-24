@@ -229,6 +229,10 @@ class DetailRegionsViewController: UIViewController {
         
         viewModel.isLiked.toggle()
         animateLikeButton()
+        if viewModel.isLiked {
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(.success)
+        }
         viewModel.toggleLike(isLiked: viewModel.isLiked)
         configureUI()
     }
