@@ -27,8 +27,6 @@ private enum Constants {
 class CarouselCollectionView: UICollectionView  {
     var detailViewModel: DetailRegionsViewModel?
     weak var delegateSwipe: CarouselCollectionViewDelegate?
-    let cells = [Brand]()
-    private var regions: [Brand] = []
     let carouselLayout = UICollectionViewFlowLayout()
     
     init() {

@@ -32,8 +32,7 @@ class DetailRegionsViewController: UIViewController {
     private let viewsLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textAlignment = .center
-        label.textAlignment = .right
+        label.textAlignment = .left
         return label
     }()
     
@@ -143,7 +142,7 @@ class DetailRegionsViewController: UIViewController {
         
         viewsLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            viewsLabel.widthAnchor.constraint(equalToConstant: 40),
+            viewsLabel.widthAnchor.constraint(equalToConstant: 50),
             viewsLabel.trailingAnchor.constraint(equalTo: horizontalStack.trailingAnchor),
         ])
         
@@ -217,7 +216,7 @@ class DetailRegionsViewController: UIViewController {
             bottomControlsStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             bottomControlsStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             bottomControlsStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            bottomControlsStackView.heightAnchor.constraint(equalToConstant: 50)
+            bottomControlsStackView.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
