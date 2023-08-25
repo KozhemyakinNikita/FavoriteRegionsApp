@@ -11,6 +11,9 @@ import UIKit
 // MARK: - class DetailRegionsViewController: UIViewController
 
 class DetailRegionsViewController: UIViewController {
+    
+    // MARK: - Properties
+    
     var viewModel: DetailRegionsViewModel?
     
     private let regionImageView: UIImageView = {
@@ -93,6 +96,8 @@ class DetailRegionsViewController: UIViewController {
         return eye
     }()
     
+    // MARK: - Override functions
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
@@ -100,6 +105,7 @@ class DetailRegionsViewController: UIViewController {
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
         setupUI()
         configureUI()
+        updateViewsCountLabel()
         carouselCollectionView.detailViewModel = viewModel
         
         setupColors()
@@ -107,6 +113,8 @@ class DetailRegionsViewController: UIViewController {
         setupBottomControls()
         carouselCollectionView.delegateSwipe = self
     }
+    
+    // MARK: - Private functions
     
     private func setupUI() {
         view.addSubview(titleLabel)
@@ -144,6 +152,12 @@ class DetailRegionsViewController: UIViewController {
         NSLayoutConstraint.activate([
             viewsLabel.widthAnchor.constraint(equalToConstant: 50),
             viewsLabel.trailingAnchor.constraint(equalTo: horizontalStack.trailingAnchor),
+        ])
+        
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            likeButton.widthAnchor.constraint(equalToConstant: 30),
+            likeButton.heightAnchor.constraint(equalToConstant: 30)
         ])
         
         
@@ -219,6 +233,16 @@ class DetailRegionsViewController: UIViewController {
             bottomControlsStackView.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
+    
+    private func updateViewsCountLabel() {
+        guard let viewModel else { return }
+        viewsLabel.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        UIView.animate(withDuration: 0.5) {
+            self.viewsLabel.transform = .identity
+        }
+    }
+    
+    // MARK: - @objc functions
     
     @objc private func backButtonPrevious() {
         navigationController?.popViewController(animated: true)

@@ -12,6 +12,8 @@ import SDWebImage
 
 class CarouselCollectionViewCell: UICollectionViewCell {
     
+    // MARK: - Properties
+    
     static let reuseIdentifier = "CarouselCollectionViewCell"
     
     var regionPicture: UIImageView = {
@@ -21,6 +23,9 @@ class CarouselCollectionViewCell: UICollectionViewCell {
         picture.contentMode = .scaleAspectFill
         return picture
     }()
+    
+    // MARK: - Override functions
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -38,6 +43,8 @@ class CarouselCollectionViewCell: UICollectionViewCell {
         self.dropShadow(color: .darkGray, opacity: 1, offSet: CGSize(width: .zero, height: 0), radius: 6)
     }
     
+    // MARK: - Public functions
+    
     func setupUI() {
         addSubview(regionPicture)
         regionPicture.translatesAutoresizingMaskIntoConstraints = false
@@ -48,6 +55,8 @@ class CarouselCollectionViewCell: UICollectionViewCell {
             regionPicture.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
+    
+    // MARK: - @objc functions
     
     @objc private func imageTapped() {
         if let image = regionPicture.image {

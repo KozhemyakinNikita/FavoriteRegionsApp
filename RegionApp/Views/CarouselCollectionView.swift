@@ -25,9 +25,14 @@ private enum Constants {
 //MARK: - class CarouselCollectionView: UICollectionView
 
 class CarouselCollectionView: UICollectionView  {
+    
+    // MARK: - Properties
+    
     var detailViewModel: DetailRegionsViewModel?
     weak var delegateSwipe: CarouselCollectionViewDelegate?
     let carouselLayout = UICollectionViewFlowLayout()
+    
+    // MARK: - init
     
     init() {
         super.init(frame: .zero, collectionViewLayout: carouselLayout)
@@ -43,6 +48,8 @@ class CarouselCollectionView: UICollectionView  {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Public functions
     
     func setupLayout() {
         carouselLayout.scrollDirection = .horizontal

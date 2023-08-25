@@ -19,6 +19,9 @@ protocol RegionTableViewCellDelegate: AnyObject {
 // MARK: - class RegionTableViewCell: UITableViewCell
 
 class RegionTableViewCell: UITableViewCell {
+    
+    // MARK: - Properties
+    
     static let reuseIdentifier = "RegionCell"
     weak var delegate: RegionTableViewCellDelegate?
     var isLiked = false {
@@ -73,12 +76,15 @@ class RegionTableViewCell: UITableViewCell {
         return container
     }()
     
+    // MARK: - Override functions
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         containerView.layer.cornerRadius = 16
         containerView.dropShadow(color: UIColor.systemGray, opacity: 1, offSet: CGSize(width: .zero, height: 0), radius: 7)
     }
     
+    // MARK: - Public functions
     
     func configure(with region: Brand, cellIndex: Int) {
         isLiked = region.isLiked
@@ -97,11 +103,11 @@ class RegionTableViewCell: UITableViewCell {
         regionPicture.isUserInteractionEnabled = true
     }
     
+    // MARK: - Private functions
+    
     private func setupConstraints() {
-        
         contentView.backgroundColor = UIColor.Colors.backPrimary
         
-        //        contentView.addSubview(regionPicture)
         contentView.insertSubview(containerView, belowSubview: regionPicture)
         containerView.addSubview(regionPicture)
         regionPicture.addSubview(likeButton)
@@ -162,6 +168,8 @@ class RegionTableViewCell: UITableViewCell {
         regionLabel.backgroundColor = .green
         regionPicture.backgroundColor = .yellow
     }
+    
+    // MARK: - @objc functions
     
     @objc private func likeButtonTapped() {
         isLiked.toggle()

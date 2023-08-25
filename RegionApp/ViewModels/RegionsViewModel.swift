@@ -22,15 +22,21 @@ protocol RegionViewModelProtocol: AnyObject {
     func showLoader()
     func hideLoader()
     func didTapLikeVC(isLiked: Bool, at index: Int)
+    func didOpenRegion(at index: Int)
 }
 
 //MARK: - class RegionViewModel
 
 class RegionViewModel {
+    
+    // MARK: - Properties
+    
     var isLoading = false
     
     weak var loadingDelegate: RegionListViewReload?
     private var regions: [Brand] = []
+    
+    // MARK: - Public functions
     
     func getList() async throws -> [Brand] {
         let urlSession = URLSession.shared
@@ -88,6 +94,10 @@ extension RegionViewModel: RegionViewModelProtocol {
     
     func didTapLikeVC(isLiked: Bool, at index: Int) {
         regions[index].isLiked = isLiked
-//        print("isLikedViewModel: \(regions[index].title) - \(regions[index].isLiked)")
+        //        print("isLikedViewModel: \(regions[index].title) - \(regions[index].isLiked)")
     }
+    
+    func didOpenRegion(at index: Int) {
+            regions[index].viewsCount += 1
+        }
 }

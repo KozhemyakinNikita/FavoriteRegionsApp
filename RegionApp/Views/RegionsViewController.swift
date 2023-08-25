@@ -8,8 +8,12 @@
 import Foundation
 import UIKit
 
+// MARK: - class RegionViewController: UIViewController
 
 class RegionViewController: UIViewController {
+    
+    // MARK: - Properties
+    
     private var viewModel = RegionViewModel()
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -30,6 +34,8 @@ class RegionViewController: UIViewController {
         return indicator
     }()
     
+    // MARK: - Override functions
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
@@ -40,6 +46,8 @@ class RegionViewController: UIViewController {
         super.viewDidLoad()
         setup()
     }
+    
+    // MARK: - Public functions
     
     func setupUI() {
         view.addSubview(tableView)
@@ -59,6 +67,7 @@ class RegionViewController: UIViewController {
         ])
     }
     
+    // MARK: - Private functions
     
     private func setup() {
         setupNavBar()
@@ -109,21 +118,28 @@ extension RegionViewController: UITableViewDelegate, UITableViewDataSource {
         let detailViewController = DetailRegionsViewController()
         detailViewController.viewModel = detailViewModel
         detailViewModel.delegate = self
-        
+        viewModel.didOpenRegion(at: indexPath.row)
         navigationController?.pushViewController(detailViewController, animated: true)
-        if let cell = tableView.cellForRow(at: indexPath) as? RegionTableViewCell {
-            UIView.animate(withDuration: 0.1, animations: {
-                cell.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-            }, completion: { _ in
-                UIView.animate(withDuration: 0.1) {
-                    cell.transform = .identity
-                }
-            })
-        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 325
+    }
+    
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? RegionTableViewCell {
+            UIView.animate(withDuration: 0.1) {
+                cell.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? RegionTableViewCell {
+            UIView.animate(withDuration: 0.1) {
+                cell.transform = .identity
+            }
+        }
     }
 }
 

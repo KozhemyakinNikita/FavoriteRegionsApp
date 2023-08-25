@@ -18,7 +18,7 @@ struct Brand: Codable {
     let thumbUrls: [String]
     let tagIDS: [String]
     let slug, type: String
-    let viewsCount: Int
+    var viewsCount: Int
     var isLiked: Bool = false
     
     enum CodingKeys: String, CodingKey {

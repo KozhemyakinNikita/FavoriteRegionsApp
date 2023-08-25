@@ -10,12 +10,17 @@ import UIKit
 //MARK: - class FullImageViewController: UIViewController
 
 class FullImageViewController: UIViewController {
+    
+    // MARK: - Properties
+    
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         return imageView
     }()
+    
+    // MARK: - init
     
     init(image: UIImage) {
         super.init(nibName: nil, bundle: nil)
@@ -25,6 +30,8 @@ class FullImageViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Override functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +48,8 @@ class FullImageViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissViewController))
         view.addGestureRecognizer(tapGesture)
     }
+    
+    // MARK: - @objc functions
     
     @objc private func dismissViewController() {
         dismiss(animated: true, completion: nil)
