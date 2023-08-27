@@ -77,47 +77,12 @@
 			isa = PBXGroup;
 			children = (
 				825C70842A93C12600F17A7C /* Services */,
-				825C70832A93C11900F17A7C /* Models */,
-				825C70822A93C11000F17A7C /* Views */,
-				825C70812A93C0F200F17A7C /* ViewModels */,
-				825C706D2A93BF6B00F17A7C /* AppDelegate.swift */,
-				825C706F2A93BF6B00F17A7C /* SceneDelegate.swift */,
-				825C70762A93BF6E00F17A7C /* Assets.xcassets */,
-				825C70782A93BF6E00F17A7C /* LaunchScreen.storyboard */,
-				825C707B2A93BF6E00F17A7C /* Info.plist */,
+				8278FE662A9C0ABB0059BE43 /* Screens */,
+				8278FE6D2A9C0CB30059BE43 /* App */,
+				8278FE6E2A9C0CF10059BE43 /* Sources */,
 				825C70912A94239C00F17A7C /* Extentions.swift */,
 			);
 			path = RegionApp;
-			sourceTree = "<group>";
-		};
-		825C70812A93C0F200F17A7C /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				825C70952A955EFF00F17A7C /* DetailRegionsViewModel.swift */,
-				825C708B2A93C4C600F17A7C /* RegionsViewModel.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		825C70822A93C11000F17A7C /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				825C70892A93C4B200F17A7C /* RegionsViewController.swift */,
-				825C708F2A93E15000F17A7C /* RegionsTableViewCell.swift */,
-				825C70932A94FBC000F17A7C /* DetailRegionsViewController.swift */,
-				825C70992A96198E00F17A7C /* CarouselCollectionView.swift */,
-				825C709B2A9621BA00F17A7C /* CarouselCollectionViewCell.swift */,
-				82F327B62A9783C400A2A225 /* FullImageViewController.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		825C70832A93C11900F17A7C /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				825C708D2A93C4D100F17A7C /* RegionsModel.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		825C70842A93C12600F17A7C /* Services */ = {
@@ -126,6 +91,89 @@
 				825C70852A93C33D00F17A7C /* APIService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		8278FE662A9C0ABB0059BE43 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				8278FE672A9C0AF00059BE43 /* Main Screen */,
+				8278FE682A9C0B830059BE43 /* Detail Screen */,
+				8278FE6A2A9C0C3F0059BE43 /* Custom Views */,
+				8278FE692A9C0C0A0059BE43 /* Detail Full Image Screen  */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		8278FE672A9C0AF00059BE43 /* Main Screen */ = {
+			isa = PBXGroup;
+			children = (
+				825C70892A93C4B200F17A7C /* RegionsViewController.swift */,
+				825C708B2A93C4C600F17A7C /* RegionsViewModel.swift */,
+				825C708D2A93C4D100F17A7C /* RegionsModel.swift */,
+			);
+			path = "Main Screen";
+			sourceTree = "<group>";
+		};
+		8278FE682A9C0B830059BE43 /* Detail Screen */ = {
+			isa = PBXGroup;
+			children = (
+				825C70932A94FBC000F17A7C /* DetailRegionsViewController.swift */,
+				825C70952A955EFF00F17A7C /* DetailRegionsViewModel.swift */,
+			);
+			path = "Detail Screen";
+			sourceTree = "<group>";
+		};
+		8278FE692A9C0C0A0059BE43 /* Detail Full Image Screen  */ = {
+			isa = PBXGroup;
+			children = (
+				82F327B62A9783C400A2A225 /* FullImageViewController.swift */,
+			);
+			path = "Detail Full Image Screen ";
+			sourceTree = "<group>";
+		};
+		8278FE6A2A9C0C3F0059BE43 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				8278FE6C2A9C0C6B0059BE43 /* Main Screen */,
+				8278FE6B2A9C0C5E0059BE43 /* Detail Screen */,
+			);
+			path = "Custom Views";
+			sourceTree = "<group>";
+		};
+		8278FE6B2A9C0C5E0059BE43 /* Detail Screen */ = {
+			isa = PBXGroup;
+			children = (
+				825C70992A96198E00F17A7C /* CarouselCollectionView.swift */,
+				825C709B2A9621BA00F17A7C /* CarouselCollectionViewCell.swift */,
+			);
+			path = "Detail Screen";
+			sourceTree = "<group>";
+		};
+		8278FE6C2A9C0C6B0059BE43 /* Main Screen */ = {
+			isa = PBXGroup;
+			children = (
+				825C708F2A93E15000F17A7C /* RegionsTableViewCell.swift */,
+			);
+			path = "Main Screen";
+			sourceTree = "<group>";
+		};
+		8278FE6D2A9C0CB30059BE43 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				825C706D2A93BF6B00F17A7C /* AppDelegate.swift */,
+				825C706F2A93BF6B00F17A7C /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		8278FE6E2A9C0CF10059BE43 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				825C70782A93BF6E00F17A7C /* LaunchScreen.storyboard */,
+				825C707B2A93BF6E00F17A7C /* Info.plist */,
+				825C70762A93BF6E00F17A7C /* Assets.xcassets */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -357,7 +405,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5Q6N538F59;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RegionApp/Info.plist;
+				INFOPLIST_FILE = RegionApp/Sources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -385,7 +433,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5Q6N538F59;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RegionApp/Info.plist;
+				INFOPLIST_FILE = RegionApp/Sources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
